@@ -103,10 +103,18 @@ public class NovaServer implements Server {
 	}
 
 	@JsonIgnore
+	@SuppressWarnings("rawtypes")
 	@Override
 	public String getImageId() {
-		Image image = getImage();
-		return (image != null) ? image.getId() : null;
+	//HY: borrow from https://github.com/ContainX/openstack4j/issues/881	
+		if(image instanceof LinkedHashMap) {
+			LinkedHashMap map = (LinkedHashMap) image;
+			return (String)map.get("id");
+		}
+		return getImage().getId();
+		
+//		Image image = getImage();
+//		return (image != null) ? image.getId() : null;
 	}
 	
 	@SuppressWarnings("rawtypes")

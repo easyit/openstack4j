@@ -63,6 +63,8 @@ public class CinderVolume implements Volume {
 	private String tenantId;	
 	@JsonProperty("encrypted")
 	private Boolean encrypted;
+	@JsonProperty("os-vol-host-attr:host")
+	private String backend;
 	/**
 	 * {@inheritDoc}
 	 */
@@ -223,6 +225,11 @@ public class CinderVolume implements Volume {
 		return encrypted;
 	}
 	
+	@Override
+	public String getBackend() {
+		return backend;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -234,6 +241,7 @@ public class CinderVolume implements Volume {
 				     .add("volumeType", volumeType).add("imageRef", getImageRef())
 				     .add("sourceVolid", sourceVolid).add("snapshotId", snapshotId).add("metadata", metadata)
 				     .add("bootable", bootable)
+				     .add("backend", backend)
 				     .toString();
 	}
 	
@@ -333,4 +341,6 @@ public class CinderVolume implements Volume {
             return this;
         }
 	}
+
+	
 }

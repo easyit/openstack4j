@@ -53,7 +53,7 @@ public class CinderBackendStoragePool implements VolumeBackendPool {
         @JsonProperty("location_info")
         private String locationinfo;
         @JsonProperty("total_capacity_gb")
-        private Long totalCapacityGb;
+        private String totalCapacityGb;
         @JsonProperty("thick_provisioning_support")
         private Boolean thickprovisioningsupport;
         @JsonProperty("reserved_percentage")
@@ -119,7 +119,9 @@ public class CinderBackendStoragePool implements VolumeBackendPool {
 
         @Override
         public Long getTotalCapacityGb() {
-            return totalCapacityGb;
+        	// example data "95.00" - abnormal case from Helion HOS
+           return (long)Double.parseDouble(totalCapacityGb.replace("\"", ""));
+//            return totalCapacityGb;
         }
 
         @Override
